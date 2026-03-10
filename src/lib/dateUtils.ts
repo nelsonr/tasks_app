@@ -1,4 +1,4 @@
-export function getFormattedDate(date: string): string {
+export function formatDate(date: string): string {
   return new Date(date).toLocaleDateString("en-EN", {
     day: "numeric",
     month: "long",
@@ -6,7 +6,7 @@ export function getFormattedDate(date: string): string {
   });
 }
 
-export function getFormattedDateTime(date: string): string {
+export function formatDateTime(date: string): string {
   return new Date(date).toLocaleDateString("en-EN", {
     day: "numeric",
     month: "long",
@@ -16,7 +16,7 @@ export function getFormattedDateTime(date: string): string {
   });
 }
 
-export function getTime(date: string): string {
+export function formatTime(date: string): string {
   return new Date(date).toLocaleTimeString("en-EN", {
     hour: "numeric",
     minute: "numeric",

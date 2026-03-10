@@ -13,7 +13,7 @@
     "windows": [
       {
         "title": "Tasks",
-        "width": 600,
+        "width": 560,
         "height": 480,
         "alwaysOnTop": true
       }
