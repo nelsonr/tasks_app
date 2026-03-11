@@ -1,9 +1,10 @@
 import { useMemo, useRef } from "react";
 import { useTasks } from "./hooks/useTasks";
-import { formatDate, formatTime, getTimestamp } from "./lib/dateUtils";
+import { getTimestamp } from "./lib/dateUtils";
 import { Task } from "./types";
 
 import "./App.css";
+import { DateGroup } from "./components/DateGroup";
 
 function App() {
   const { tasks, loading, error, addTask } = useTasks();
@@ -31,10 +32,6 @@ function App() {
     return Object.entries(dateTasks);
   }, [tasks]);
 
-  const formatName = (name: string) => {
-    return name[0].toUpperCase() + name.slice(1);
-  };
-
   return (
     <main>
       <section className="content">
@@ -43,19 +40,7 @@ function App() {
 
         <div className="tasks-by-date">
           {tasksByDate.map(([date, tasks]) => (
-            <div key={getTimestamp(date)}>
-              <h3 className="tasks-by-date__date">{formatDate(date)}</h3>
-              <ul>
-                {tasks.map((task) => (
-                  <li key={task.datetime}>
-                    {formatTime(task.datetime)} &ndash;{" "}
-                    <span className="tasks-by-date__name">
-                      {formatName(task.name)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <DateGroup key={getTimestamp(date)} date={date} tasks={tasks} />
           ))}
         </div>
       </section>
