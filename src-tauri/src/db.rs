@@ -48,19 +48,20 @@ pub fn list_tasks(
 
     let mut stmt = match today_only {
         true => conn.prepare(&format!(
-            "SELECT name, datetime FROM tasks
+            "SELECT id, name, datetime FROM tasks
             WHERE datetime >= {today_date}
             ORDER BY datetime {order}"
         ))?,
         false => conn.prepare(&format!(
-            "SELECT name, datetime FROM tasks ORDER BY datetime {order}"
+            "SELECT id, name, datetime FROM tasks ORDER BY datetime {order}"
         ))?,
     };
 
     let rows = stmt.query_map([], |row| {
         Ok(Task {
-            name: row.get(0)?,
-            datetime: row.get(1)?,
+            id: row.get(0)?,
+            name: row.get(1)?,
+            datetime: row.get(2)?,
         })
     })?;
 
@@ -70,6 +71,19 @@ pub fn list_tasks(
     }
 
     Ok(tasks)
+}
+
+pub fn update_task_datetime(
+    conn: &rusqlite::Connection,
+    id: i64,
+    datetime: chrono::DateTime<chrono::Utc>,
+) -> Result<()> {
+    conn.execute(
+        "UPDATE tasks SET datetime = ? WHERE id = ?",
+        rusqlite::params![datetime, id],
+    )?;
+
+    Ok(())
 }
 
 pub fn delete_tasks(conn: &rusqlite::Connection) -> Result<()> {

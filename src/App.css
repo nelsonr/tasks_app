@@ -42,10 +42,7 @@ input {
     appearance: none;
     flex: 1;
     font-size: 1rem;
-    height: 60px;
-    padding: 20px 16px;
     border: 1px solid var(--border-color);
-    border-radius: 12px;
     outline: rgba(0, 0, 0, 0) solid 2px;
     box-shadow:
         rgba(0, 0, 0, 0) 0px 0px 0px 0px,
@@ -99,6 +96,7 @@ section {
     padding-bottom: var(--spacing-sm);
     border-bottom: 1px solid transparent;
     transition: border-color 150ms var(--transition-easing);
+    z-index: 2;
 }
 
 .tasks-by-date__list {
@@ -109,12 +107,43 @@ section {
     border-bottom-color: var(--border-color-muted);
 }
 
+.tasks-by-date__time-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.tasks-by-date__time {
+    cursor: pointer;
+}
+
+.tasks-by-date__time:hover {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+.tasks-by-date__time-input {
+    position: absolute;
+    left: -5px;
+    top: -3px;
+    width: 4.5ch;
+    font: inherit;
+    color: inherit;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color-muted);
+    border-radius: 4px;
+    outline: none;
+    padding: 2px 4px;
+    z-index: 1;
+    box-sizing: content-box;
+}
+
 footer {
     background-color: var(--bg-color);
     position: sticky;
     bottom: 0;
     padding: var(--spacing-lg);
     border-top: 1px solid var(--border-color-muted);
+    z-index: 3;
 }
 
 footer form {
@@ -123,4 +152,7 @@ footer form {
 
 footer form input {
     flex: 1;
+    height: 60px;
+    padding: 20px 16px;
+    border-radius: 12px;
 }

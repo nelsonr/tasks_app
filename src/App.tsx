@@ -7,7 +7,7 @@ import "./App.css";
 import { DateGroup } from "./components/DateGroup";
 
 function App() {
-  const { tasks, loading, error, addTask } = useTasks();
+  const { tasks, loading, error, addTask, updateTaskDatetime } = useTasks();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.SubmitEvent) => {
@@ -40,7 +40,12 @@ function App() {
 
         <div className="tasks-by-date">
           {tasksByDate.map(([date, tasks]) => (
-            <DateGroup key={getTimestamp(date)} date={date} tasks={tasks} />
+            <DateGroup
+              key={getTimestamp(date)}
+              date={date}
+              tasks={tasks}
+              onUpdateDatetime={updateTaskDatetime}
+            />
           ))}
         </div>
       </section>

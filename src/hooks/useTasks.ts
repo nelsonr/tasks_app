@@ -7,6 +7,7 @@ type UseTasksResult = {
   loading: boolean;
   error: string | null;
   addTask: (name: string) => Promise<void>;
+  updateTaskDatetime: (id: number, datetime: string) => Promise<void>;
 };
 
 export function useTasks(): UseTasksResult {
@@ -29,5 +30,10 @@ export function useTasks(): UseTasksResult {
     await fetchTasks();
   };
 
-  return { tasks, loading, error, addTask };
+  const updateTaskDatetime = async (id: number, datetime: string) => {
+    await invoke("update_task_datetime", { id, datetime });
+    await fetchTasks();
+  };
+
+  return { tasks, loading, error, addTask, updateTaskDatetime };
 }
