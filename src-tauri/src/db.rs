@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use chrono::{self};
+use chrono::{self, SubsecRound};
 use std::fs;
 
 use crate::models::Task;
@@ -32,7 +32,7 @@ pub fn open_connection() -> Result<rusqlite::Connection> {
 pub fn add_task(conn: &rusqlite::Connection, name: &str) -> Result<()> {
     conn.execute(
         "INSERT INTO tasks (name, datetime) VALUES (?, ?)",
-        rusqlite::params![name, chrono::Utc::now()],
+        rusqlite::params![name, chrono::Utc::now().trunc_subsecs(0)],
     )?;
 
     Ok(())
@@ -86,8 +86,9 @@ pub fn update_task_datetime(
     Ok(())
 }
 
-pub fn delete_tasks(conn: &rusqlite::Connection) -> Result<()> {
-    conn.execute("DELETE FROM tasks", [])?;
+// TODO: Implement tasks delete
+// pub fn delete_tasks(conn: &rusqlite::Connection) -> Result<()> {
+//     conn.execute("DELETE FROM tasks", [])?;
 
-    Ok(())
-}
+//     Ok(())
+// }

@@ -74,7 +74,7 @@ export function DateGroup({ date, tasks, onUpdateDatetime }: Props) {
 
       <ul className="tasks-by-date__list">
         {tasks.map((task) => (
-          <li key={task.datetime}>
+          <li key={task.id}>
             <EditableTime task={task} onUpdateDatetime={onUpdateDatetime} /> &ndash;{" "}
             <span className="tasks-by-date__name">
               {task.name[0].toUpperCase() + task.name.slice(1)}
