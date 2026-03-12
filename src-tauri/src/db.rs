@@ -29,15 +29,6 @@ pub fn open_connection() -> Result<rusqlite::Connection> {
     Ok(conn)
 }
 
-pub fn add_task(conn: &rusqlite::Connection, name: &str) -> Result<()> {
-    conn.execute(
-        "INSERT INTO tasks (name, datetime) VALUES (?, ?)",
-        rusqlite::params![name, chrono::Utc::now().trunc_subsecs(0)],
-    )?;
-
-    Ok(())
-}
-
 pub fn list_tasks(
     conn: &rusqlite::Connection,
     today_only: bool,
@@ -73,6 +64,21 @@ pub fn list_tasks(
     Ok(tasks)
 }
 
+pub fn add_task(conn: &rusqlite::Connection, name: &str) -> Result<()> {
+    conn.execute(
+        "INSERT INTO tasks (name, datetime) VALUES (?, ?)",
+        rusqlite::params![name, chrono::Utc::now().trunc_subsecs(0)],
+    )?;
+
+    Ok(())
+}
+
+pub fn delete_task(conn: &rusqlite::Connection, id: i64) -> Result<()> {
+    conn.execute("DELETE FROM tasks WHERE id = ?", rusqlite::params![id])?;
+
+    Ok(())
+}
+
 pub fn update_task_datetime(
     conn: &rusqlite::Connection,
     id: i64,
@@ -85,10 +91,3 @@ pub fn update_task_datetime(
 
     Ok(())
 }
-
-// TODO: Implement tasks delete
-// pub fn delete_tasks(conn: &rusqlite::Connection) -> Result<()> {
-//     conn.execute("DELETE FROM tasks", [])?;
-
-//     Ok(())
-// }

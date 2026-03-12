@@ -7,7 +7,15 @@ import "./App.css";
 import { DateGroup } from "./components/DateGroup";
 
 function App() {
-  const { tasks, loading, error, addTask, updateTaskDatetime } = useTasks();
+  const {
+    tasks,
+    addTask,
+    deleteTask,
+    updateTaskTime,
+    isLoading,
+    errorMessage,
+  } = useTasks();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.SubmitEvent) => {
@@ -35,16 +43,17 @@ function App() {
   return (
     <main>
       <section className="content">
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
+        {isLoading && <p>Loading...</p>}
+        {errorMessage && <p>Error: {errorMessage}</p>}
 
-        <div className="tasks-by-date">
+        <div className="tasks">
           {tasksByDate.map(([date, tasks]) => (
             <DateGroup
               key={getTimestamp(date)}
               date={date}
               tasks={tasks}
-              onUpdateDatetime={updateTaskDatetime}
+              onUpdateTime={updateTaskTime}
+              onDeleteTask={deleteTask}
             />
           ))}
         </div>
