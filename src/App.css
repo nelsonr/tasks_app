@@ -141,7 +141,7 @@ footer {
     background-color: var(--bg-color);
     position: sticky;
     bottom: 0;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     border-top: 1px solid var(--border-color-muted);
     z-index: 3;
 }
