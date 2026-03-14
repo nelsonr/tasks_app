@@ -20,6 +20,12 @@ fn add_task(name: String, state: tauri::State<DBState>) -> Result<(), String> {
 }
 
 #[tauri::command]
+fn update_task_name(id: i64, name: String, state: tauri::State<DBState>) -> Result<(), String> {
+    let conn = &state.conn.lock().unwrap();
+    db::update_task_name(conn, id, name).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
 fn update_task_datetime(
     id: i64,
     datetime: chrono::DateTime<chrono::Utc>,
@@ -48,6 +54,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             list_tasks,
             add_task,
+            update_task_name,
             update_task_datetime,
             delete_task
         ])

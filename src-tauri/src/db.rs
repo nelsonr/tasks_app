@@ -79,6 +79,14 @@ pub fn delete_task(conn: &rusqlite::Connection, id: i64) -> Result<()> {
     Ok(())
 }
 
+pub fn update_task_name(conn: &rusqlite::Connection, id: i64, name: String) -> Result<()> {
+    conn.execute(
+        "UPDATE tasks SET name = ? WHERE id = ?",
+        rusqlite::params![name, id],
+    )?;
+
+    Ok(())
+}
 pub fn update_task_datetime(
     conn: &rusqlite::Connection,
     id: i64,

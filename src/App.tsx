@@ -1,16 +1,17 @@
 import { useMemo, useRef } from "react";
+import { DailyTasks } from "./components/DailyTasks";
 import { useTasks } from "./hooks/useTasks";
 import { getTimestamp } from "./lib/dateUtils";
 import { Task } from "./types";
 
 import "./App.css";
-import { DateGroup } from "./components/DateGroup";
 
 function App() {
   const {
     tasks,
     addTask,
     deleteTask,
+    updateTaskName,
     updateTaskTime,
     isLoading,
     errorMessage,
@@ -48,10 +49,11 @@ function App() {
 
         <div className="tasks">
           {tasksByDate.map(([date, tasks]) => (
-            <DateGroup
+            <DailyTasks
               key={getTimestamp(date)}
               date={date}
               tasks={tasks}
+              onUpdateName={updateTaskName}
               onUpdateTime={updateTaskTime}
               onDeleteTask={deleteTask}
             />

@@ -8,6 +8,7 @@ type UseTasksResult = {
   errorMessage: string | null;
   addTask: (name: string) => Promise<void>;
   deleteTask: (id: number) => Promise<void>;
+  updateTaskName: (id: number, name: string) => Promise<void>;
   updateTaskTime: (id: number, datetime: string) => Promise<void>;
 };
 
@@ -36,6 +37,11 @@ export function useTasks(): UseTasksResult {
     await fetchTasks();
   };
 
+  const updateTaskName = async (id: number, name: string) => {
+    await invoke("update_task_name", { id, name });
+    await fetchTasks();
+  };
+
   const updateTaskTime = async (id: number, datetime: string) => {
     await invoke("update_task_datetime", { id, datetime });
     await fetchTasks();
@@ -45,6 +51,7 @@ export function useTasks(): UseTasksResult {
     tasks,
     addTask,
     deleteTask,
+    updateTaskName,
     updateTaskTime,
     isLoading,
     errorMessage,
